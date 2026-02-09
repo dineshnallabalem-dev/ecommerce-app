@@ -1,31 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminLogin from "./admin/AdminLogin";
-import PrivateRoute from "./admin/PrivateRoute";
-import AdminLayout from "./admin/AdminLayout";
-import AdminHome from "./admin/AdminHome";
-import ProductList from "./admin/products/ProductList";
-import AddProduct from "./admin/products/AddProduct";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import AdminRoutes from "./admin/routes/AdminRoutes";
+import AppLayout from "./AppLayout";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/admin/login" element={<AdminLogin />} />
+    <Routes>
+      <Route element={<AppLayout />}>
+        {/* PUBLIC */}
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute>
-              <AdminLayout />
-            </PrivateRoute>
-          }
-        >
-          <Route index element={<AdminHome />} />
-          <Route path="products" element={<ProductList />} />
-          <Route path="products/add" element={<AddProduct />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        {/* ADMIN */}
+        <Route path="/admin/*" element={<AdminRoutes />} />
+      </Route>
+    </Routes>
   );
 }
 
